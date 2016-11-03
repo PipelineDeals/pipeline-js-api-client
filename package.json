@@ -1,0 +1,25 @@
+{
+  "name": "PipelineDeals",
+  "version": "1.0.0",
+  "description": "PipelineDeals JS API client",
+  "main": "PipelineDeals.js",
+  "scripts": {
+    "test": "./node_modules/karma/bin/karma start --single-run"
+  },
+  "keywords": [
+    "api"
+  ],
+  "author": "PipelineDeals",
+  "devDependencies": {
+    "extract-text-webpack-plugin": "^1.0.1",
+    "html-webpack-plugin": "^2.24.1",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.3.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.0.2",
+    "karma-jasmine-diff-reporter": "^0.6.2",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "karma-webpack": "^1.8.0",
+    "webpack": "^1.13.3"
+  }
+}
