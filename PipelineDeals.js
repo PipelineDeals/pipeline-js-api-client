@@ -2,6 +2,7 @@ import Requester from './PipelineDeals/Requester'
 
 import CustomFieldLabelDropdownEntries from './PipelineDeals/CustomFieldLabelDropdownEntries'
 import CustomFieldLabels from './PipelineDeals/CustomFieldLabels'
+import CustomFieldGroups from './PipelineDeals/CustomFieldGroups'
 import NoteCategories from './PipelineDeals/NoteCategories'
 import Notes from './PipelineDeals/Notes'
 import People from './PipelineDeals/People'
@@ -27,6 +28,10 @@ export default class PipelineDeals {
 
   customFieldLabels() {
     return new CustomFieldLabels(this)
+  }
+
+  customFieldGroups() {
+    return new CustomFieldGroups(this)
   }
 
   noteCategories() {
