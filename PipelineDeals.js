@@ -1,13 +1,13 @@
-import Requester from './PipelineDeals/Requester'
+import Requester from './src/Requester'
 
-import CustomFieldLabelDropdownEntries from './PipelineDeals/CustomFieldLabelDropdownEntries'
-import CustomFieldLabels from './PipelineDeals/CustomFieldLabels'
-import CustomFieldGroups from './PipelineDeals/CustomFieldGroups'
-import NoteCategories from './PipelineDeals/NoteCategories'
-import Notes from './PipelineDeals/Notes'
-import People from './PipelineDeals/People'
-import Person from './PipelineDeals/Person'
-import Users from './PipelineDeals/Users'
+import CustomFieldLabelDropdownEntries from './src/CustomFieldLabelDropdownEntries'
+import CustomFieldLabels from './src/CustomFieldLabels'
+import CustomFieldGroups from './src/CustomFieldGroups'
+import NoteCategories from './src/NoteCategories'
+import Notes from './src/Notes'
+import People from './src/People'
+import Person from './src/Person'
+import Users from './src/Users'
 
 export default class PipelineDeals {
   constructor(auth, apiBase = 'https://api.pipelinedeals.com/api/v3') {

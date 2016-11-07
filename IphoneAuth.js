@@ -1,1 +1,1 @@
-module.exports = require('./PipelineDeals/IphoneAuth')
+module.exports = require('./src/IphoneAuth')
