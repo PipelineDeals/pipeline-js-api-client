@@ -9,11 +9,12 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'sinon'],
 
     // list of files / patterns to load in the browser
     files: webpackConfig.externalAssets.js.concat([
       'node_modules/babel-polyfill/dist/polyfill.js',
+      'node_modules/whatwg-fetch/fetch.js',
       'spec/helpers/**/*.js',
       'spec/**/*_spec.js'
     ]),
@@ -54,6 +55,7 @@ module.exports = function(config) {
 
     plugins: [
       require("karma-webpack"),
+      require("karma-sinon"),
       require("karma-jasmine"),
       require("karma-jasmine-diff-reporter"),
       require("karma-phantomjs-launcher"),
