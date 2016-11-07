@@ -30,7 +30,10 @@
     "karma-sinon": "^1.0.5",
     "karma-webpack": "^1.8.0",
     "sinon": "^1.17.6",
-    "webpack": "^1.13.3",
+    "webpack": "^1.13.3"
+  },
+  "dependencies": {
+    "query-string": "^4.2.3",
     "whatwg-fetch": "^1.0.0"
   }
 }
