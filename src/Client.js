@@ -14,8 +14,16 @@ export default class Client {
     this.__requester = new Requester(apiBase, auth)
   }
 
+  delete (path, query = {}) {
+    return this.__requester.delete(path, query)
+  }
+
   post (path, data = {}) {
     return this.__requester.post(path, data)
+  }
+
+  put (path, data = {}) {
+    return this.__requester.put(path, data)
   }
 
   request (path, query = {}) {

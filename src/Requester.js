@@ -9,6 +9,16 @@ class Requester {
     this.__auth = auth
   }
 
+  delete (path, query = {}) {
+    return fetch(this.__urlFor(path, query), {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'DELETE'
+    }).then(handleErrors)
+  }
+
   post (path, data = {}) {
     return fetch(this.__urlFor(path), {
       body: JSON.stringify(data),
@@ -17,6 +27,17 @@ class Requester {
         'Content-Type': 'application/json'
       },
       method: 'POST'
+    }).then(handleErrors)
+  }
+
+  put (path, data = {}) {
+    return fetch(this.__urlFor(path), {
+      body: JSON.stringify(data),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'PUT'
     }).then(handleErrors)
   }
 
