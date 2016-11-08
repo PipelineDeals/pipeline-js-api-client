@@ -21,8 +21,13 @@ class Requester {
   }
 
   request (path, query = {}) {
-    return fetch(this.__urlFor(path, query))
-      .then(handleErrors)
+    return fetch(this.__urlFor(path, query), {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'GET'
+    }).then(handleErrors)
   }
 
   __urlFor (path, query = {}) {
