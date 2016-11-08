@@ -1,6 +1,8 @@
+/* global fetch */
+
 import handleErrors from './Error'
 
-export default function PipelineDealsIphoneAuth(username, password, apiBase = 'https://api.pipelinedeals.com') {
+export default function IphoneAuth (username, password, apiBase = 'https://api.pipelinedeals.com') {
   let path = apiBase + '/api/v3/iphone_auths'
   let body = JSON.stringify({
     email_or_username: username,
@@ -14,7 +16,6 @@ export default function PipelineDealsIphoneAuth(username, password, apiBase = 'h
     },
     method: 'POST',
     body: body
-  })
-  .then(handleErrors)
-  .then(json => { return json.user })
+  }).then(handleErrors)
+    .then(json => { return json.user })
 }

@@ -45,7 +45,7 @@ describe('Requester', () => {
         .then(json => {
           expect(json).toEqual({ id: 123, first_name: 'New name' })
           done()
-      })
+        })
     })
   })
 })
