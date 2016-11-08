@@ -1,4 +1,4 @@
-require('whatwg-fetch');
+require('whatwg-fetch')
 
 export function jsonOk (body) {
   const mockResponse = new window.Response(JSON.stringify(body), {
@@ -6,9 +6,9 @@ export function jsonOk (body) {
     headers: {
       'Content-type': 'application/json'
     }
-  });
+  })
 
-  return Promise.resolve(mockResponse);
+  return Promise.resolve(mockResponse)
 }
 
 export function jsonError (status, body) {
@@ -17,7 +17,7 @@ export function jsonError (status, body) {
     headers: {
       'Content-type': 'application/json'
     }
-  });
+  })
 
-  return Promise.resolve(mockResponse);
+  return Promise.resolve(mockResponse)
 }
