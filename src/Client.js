@@ -1,15 +1,15 @@
-import Requester from './src/Requester'
+import Requester from './Requester'
 
-import CustomFieldLabelDropdownEntries from './src/CustomFieldLabelDropdownEntries'
-import CustomFieldLabels from './src/CustomFieldLabels'
-import CustomFieldGroups from './src/CustomFieldGroups'
-import NoteCategories from './src/NoteCategories'
-import Notes from './src/Notes'
-import People from './src/People'
-import Person from './src/Person'
-import Users from './src/Users'
+import CustomFieldLabelDropdownEntries from './CustomFieldLabelDropdownEntries'
+import CustomFieldLabels from './CustomFieldLabels'
+import CustomFieldGroups from './CustomFieldGroups'
+import NoteCategories from './NoteCategories'
+import Notes from './Notes'
+import People from './People'
+import Person from './Person'
+import Users from './Users'
 
-export default class PipelineDeals {
+export default class Client {
   constructor(auth, apiBase = 'https://api.pipelinedeals.com/api/v3') {
     this.__requester = new Requester(apiBase, auth)
   }
