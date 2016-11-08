@@ -9,10 +9,10 @@ class People {
   }
 
   search (query) {
-    return this.__client.request(this.__urlFor(''), query)
+    return this.__client.request(this.__urlFor(), query)
   }
 
-  __urlFor (path) {
+  __urlFor (path = '') {
     return this.__basePath + path
   }
 }
