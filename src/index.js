@@ -1,7 +1,10 @@
 import Client from './Client'
-import IphoneAuth from './IphoneAuth'
 import Requester from './Requester'
+
+import IphoneAuth from './IphoneAuth'
+
+import makePaginateable from './makePaginateable'
 
 export default Client
 
-export { IphoneAuth, Requester }
+export { IphoneAuth, Requester, makePaginateable }
