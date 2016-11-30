@@ -37,7 +37,7 @@ class Requester {
     return {
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       credentials: 'same-origin',
       ...options

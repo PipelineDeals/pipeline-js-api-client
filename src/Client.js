@@ -3,6 +3,7 @@ import Requester from './Requester'
 import CustomFieldLabelDropdownEntries from './CustomFieldLabelDropdownEntries'
 import CustomFieldLabels from './CustomFieldLabels'
 import CustomFieldGroups from './CustomFieldGroups'
+import DealLossReasons from './DealLossReasons'
 import NoteCategories from './NoteCategories'
 import Notes from './Notes'
 import People from './People'
@@ -40,6 +41,10 @@ export default class Client {
 
   customFieldGroups () {
     return new CustomFieldGroups(this)
+  }
+
+  dealLossReasons () {
+    return new DealLossReasons(this)
   }
 
   noteCategories () {
