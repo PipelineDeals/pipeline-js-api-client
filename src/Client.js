@@ -4,6 +4,7 @@ import CustomFieldLabelDropdownEntries from './CustomFieldLabelDropdownEntries'
 import CustomFieldLabels from './CustomFieldLabels'
 import CustomFieldGroups from './CustomFieldGroups'
 import DealLossReasons from './DealLossReasons'
+import LeadSources from './LeadSources'
 import NoteCategories from './NoteCategories'
 import Notes from './Notes'
 import People from './People'
@@ -45,6 +46,10 @@ export default class Client {
 
   dealLossReasons () {
     return new DealLossReasons(this)
+  }
+
+  leadSources () {
+    return new LeadSources(this)
   }
 
   noteCategories () {
