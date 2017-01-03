@@ -9,6 +9,7 @@ import NoteCategories from './NoteCategories'
 import Notes from './Notes'
 import People from './People'
 import Person from './Person'
+import Profile from './Profile'
 import Users from './Users'
 
 export default class Client {
@@ -66,6 +67,10 @@ export default class Client {
 
   person (attributes) {
     return new Person(this, attributes)
+  }
+
+  profile () {
+    return new Profile(this)
   }
 
   users () {
