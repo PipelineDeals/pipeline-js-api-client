@@ -12,12 +12,11 @@ module.exports = function(config) {
     frameworks: ['jasmine', 'sinon'],
 
     // list of files / patterns to load in the browser
-    files: webpackConfig.externalAssets.js.concat([
+    files: [
       'node_modules/babel-polyfill/dist/polyfill.js',
       'node_modules/whatwg-fetch/fetch.js',
-      'spec/helpers/**/*.js',
       'spec/**/*_spec.js'
-    ]),
+    ],
 
     // list of files to exclude
     exclude: [
@@ -54,12 +53,12 @@ module.exports = function(config) {
     },
 
     plugins: [
-      require("karma-webpack"),
-      require("karma-sinon"),
-      require("karma-jasmine"),
-      require("karma-jasmine-diff-reporter"),
-      require("karma-phantomjs-launcher"),
-      require("karma-chrome-launcher")
+      require('karma-webpack'),
+      require('karma-sinon'),
+      require('karma-jasmine'),
+      require('karma-jasmine-diff-reporter'),
+      require('karma-phantomjs-launcher'),
+      require('karma-chrome-launcher')
     ],
 
     // test results reporter to use

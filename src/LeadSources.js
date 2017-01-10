@@ -1,11 +1,11 @@
-export default class CustomFieldGroups {
+export default class LeadSources {
   constructor (client) {
-    this.__basePath = '/admin/custom_field_groups'
+    this.__basePath = '/admin/lead_sources'
     this.__client = client
   }
 
-  create (group) {
-    return this.__client.post(this.__urlFor(), { custom_field_group: group })
+  create (source) {
+    return this.__client.post(this.__urlFor(), { lead_source: source })
   }
 
   delete (id) {
@@ -20,8 +20,8 @@ export default class CustomFieldGroups {
     return this.__client.request(this.__urlFor(), query)
   }
 
-  update (group) {
-    return this.__client.put(this.__urlFor(`/${group.id}`), { custom_field_group: group })
+  update (source) {
+    return this.__client.put(this.__urlFor(`/${source.id}`), { lead_source: source })
   }
 
   __urlFor (path = '') {

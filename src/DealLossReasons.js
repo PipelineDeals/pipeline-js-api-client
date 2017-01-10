@@ -1,11 +1,11 @@
-export default class CustomFieldGroups {
+export default class DealLossReasons {
   constructor (client) {
-    this.__basePath = '/admin/custom_field_groups'
+    this.__basePath = '/admin/deal_loss_reasons'
     this.__client = client
   }
 
   create (group) {
-    return this.__client.post(this.__urlFor(), { custom_field_group: group })
+    return this.__client.post(this.__urlFor(), { deal_loss_reason: group })
   }
 
   delete (id) {
@@ -21,7 +21,7 @@ export default class CustomFieldGroups {
   }
 
   update (group) {
-    return this.__client.put(this.__urlFor(`/${group.id}`), { custom_field_group: group })
+    return this.__client.put(this.__urlFor(`/${group.id}`), { deal_loss_reason: group })
   }
 
   __urlFor (path = '') {

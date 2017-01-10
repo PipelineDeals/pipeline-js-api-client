@@ -1,16 +1,16 @@
-export default function MakePaginateable(object, request) {
+export default function makePaginateable (object, request) {
   return Object.assign({}, object, {
-    request(options = {}) {
+    request (options = {}) {
       return request(options)
     },
-    [Symbol.iterator]() {
-      let entries = this.entries;
-      let page = this.pagination.page;
-      const pages = this.pagination.pages;
-      const request = this.request;
+    [Symbol.iterator] () {
+      let entries = this.entries
+      let page = this.pagination.page
+      const pages = this.pagination.pages
+      const request = this.request
 
       return {
-        next() {
+        next () {
           if (page > pages) {
             return {done: true}
           }
