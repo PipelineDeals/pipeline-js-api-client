@@ -1,9 +1,10 @@
 /* global fetch */
 
 import QueryString from 'query-string'
-import handleErrors from './Error'
 
-class Requester {
+import handleResponse from './handleResponse'
+
+export default class Requester {
   constructor (apiBase, auth) {
     this.__apiBase = apiBase
     this.__auth = auth
@@ -12,25 +13,25 @@ class Requester {
   delete (path, query = {}) {
     return fetch(this.__urlFor(path, query),
       this.__options({ method: 'DELETE' }))
-      .then(handleErrors)
+      .then(handleResponse)
   }
 
   post (path, data = {}) {
     return fetch(this.__urlFor(path),
       this.__options({ body: JSON.stringify(data), method: 'POST' }))
-      .then(handleErrors)
+      .then(handleResponse)
   }
 
   put (path, data = {}) {
     return fetch(this.__urlFor(path),
       this.__options({ body: JSON.stringify(data), method: 'PUT' }))
-      .then(handleErrors)
+      .then(handleResponse)
   }
 
   request (path, query = {}) {
     return fetch(this.__urlFor(path, query),
       this.__options({ method: 'GET' }))
-      .then(handleErrors)
+      .then(handleResponse)
   }
 
   __options (options = {}) {
@@ -53,5 +54,3 @@ class Requester {
     return url
   }
 }
-
-export default Requester
