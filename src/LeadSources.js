@@ -5,7 +5,7 @@ export default class LeadSources {
   }
 
   create (source) {
-    return this.__client.post(this.__urlFor(), { lead_source: source })
+    return this.__client.post(this.__urlFor(), { body: { lead_source: source } })
   }
 
   delete (id) {
@@ -17,11 +17,11 @@ export default class LeadSources {
   }
 
   search (query) {
-    return this.__client.request(this.__urlFor(), query)
+    return this.__client.request(this.__urlFor(), { query })
   }
 
   update (source) {
-    return this.__client.put(this.__urlFor(`/${source.id}`), { lead_source: source })
+    return this.__client.put(this.__urlFor(`/${source.id}`), { body: { lead_source: source } })
   }
 
   __urlFor (path = '') {

@@ -5,7 +5,7 @@ export default class DealLossReasons {
   }
 
   create (group) {
-    return this.__client.post(this.__urlFor(), { deal_loss_reason: group })
+    return this.__client.post(this.__urlFor(), { body: { deal_loss_reason: group } })
   }
 
   delete (id) {
@@ -17,11 +17,11 @@ export default class DealLossReasons {
   }
 
   search (query) {
-    return this.__client.request(this.__urlFor(), query)
+    return this.__client.request(this.__urlFor(), { query })
   }
 
   update (group) {
-    return this.__client.put(this.__urlFor(`/${group.id}`), { deal_loss_reason: group })
+    return this.__client.put(this.__urlFor(`/${group.id}`), { body: { deal_loss_reason: group } })
   }
 
   __urlFor (path = '') {
