@@ -5,7 +5,7 @@ export default class Notes {
   }
 
   create (note) {
-    return this.__client.post(this.__urlFor(), { note: note })
+    return this.__client.post(this.__urlFor(), { body: { note: note } })
   }
 
   get (id) {
@@ -13,7 +13,7 @@ export default class Notes {
   }
 
   search (query) {
-    return this.__client.request(this.__urlFor(), query)
+    return this.__client.request(this.__urlFor(), { query })
   }
 
   __urlFor (path = '') {

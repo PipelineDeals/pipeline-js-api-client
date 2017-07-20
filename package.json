@@ -53,7 +53,7 @@
     "webpack": "^1.13.3"
   },
   "dependencies": {
-    "query-string": "^4.2.3",
+    "qs": "^6.5.0",
     "whatwg-fetch": "^1.0.0"
   }
 }

@@ -1,21 +1,14 @@
-/* global fetch */
-
-import handleResponse from './handleResponse'
+import fetcher from './fetcher'
 
 export default function IphoneAuth (username, password, apiBase = 'https://api.pipelinedeals.com') {
-  let path = apiBase + '/api/v3/iphone_auths'
-  let body = JSON.stringify({
+  const path = apiBase + '/api/v3/iphone_auths'
+  const body = {
     email_or_username: username,
     password: password
-  })
+  }
 
-  return fetch(path, {
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    method: 'POST',
-    body: body
-  }).then(handleResponse)
-    .then(json => { return json.user })
+  return fetcher(path, {
+    body: body,
+    method: 'POST'
+  }).then(json => { return json.user })
 }

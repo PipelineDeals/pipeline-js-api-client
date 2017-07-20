@@ -9,7 +9,7 @@ export default class NoteCategories {
   }
 
   search (query) {
-    return this.__client.request(this.__urlFor(), query)
+    return this.__client.request(this.__urlFor(), { query })
   }
 
   __urlFor (path = '') {

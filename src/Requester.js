@@ -1,8 +1,4 @@
-/* global fetch */
-
-import QueryString from 'query-string'
-
-import handleResponse from './handleResponse'
+import fetcher from './fetcher'
 
 export default class Requester {
   constructor (apiBase, auth) {
@@ -10,47 +6,23 @@ export default class Requester {
     this.__auth = auth
   }
 
-  delete (path, query = {}) {
-    return fetch(this.__urlFor(path, query),
-      this.__options({ method: 'DELETE' }))
-      .then(handleResponse)
+  delete (path, options = {}) {
+    return fetcher(this.__path(path), { auth: this.__auth, method: 'DELETE', ...options })
   }
 
-  post (path, data = {}) {
-    return fetch(this.__urlFor(path),
-      this.__options({ body: JSON.stringify(data), method: 'POST' }))
-      .then(handleResponse)
+  post (path, { body = {}, ...options } = {}) {
+    return fetcher(this.__path(path), { auth: this.__auth, method: 'POST', body: JSON.stringify(body), ...options })
   }
 
-  put (path, data = {}) {
-    return fetch(this.__urlFor(path),
-      this.__options({ body: JSON.stringify(data), method: 'PUT' }))
-      .then(handleResponse)
+  put (path, { body = {}, ...options } = {}) {
+    return fetcher(this.__path(path), { auth: this.__auth, method: 'PUT', body: JSON.stringify(body), ...options })
   }
 
-  request (path, query = {}) {
-    return fetch(this.__urlFor(path, query),
-      this.__options({ method: 'GET' }))
-      .then(handleResponse)
+  request (path, options = {}) {
+    return fetcher(this.__path(path), { auth: this.__auth, method: 'GET', ...options })
   }
 
-  __options (options = {}) {
-    return {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      credentials: 'same-origin',
-      ...options
-    }
-  }
-
-  __urlFor (path, query = {}) {
-    query = Object.assign(query, this.__auth)
-
-    let queryString = QueryString.stringify(query)
-    let url = this.__apiBase + path + '.json?' + queryString
-
-    return url
+  __path (path) {
+    return this.__apiBase + path
   }
 }

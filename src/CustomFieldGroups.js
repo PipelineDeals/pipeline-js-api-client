@@ -5,7 +5,7 @@ export default class CustomFieldGroups {
   }
 
   create (group) {
-    return this.__client.post(this.__urlFor(), { custom_field_group: group })
+    return this.__client.post(this.__urlFor(), { body: { custom_field_group: group } })
   }
 
   delete (id) {
@@ -17,11 +17,11 @@ export default class CustomFieldGroups {
   }
 
   search (query) {
-    return this.__client.request(this.__urlFor(), query)
+    return this.__client.request(this.__urlFor(), { query })
   }
 
   update (group) {
-    return this.__client.put(this.__urlFor(`/${group.id}`), { custom_field_group: group })
+    return this.__client.put(this.__urlFor(`/${group.id}`), { body: { custom_field_group: group } })
   }
 
   __urlFor (path = '') {

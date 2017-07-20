@@ -5,7 +5,7 @@ export default class CustomFieldLabels {
   }
 
   create (label) {
-    return this.__client.post(this.__urlFor(), { custom_field_label: label })
+    return this.__client.post(this.__urlFor(), { body: { custom_field_label: label } })
   }
 
   delete (id) {
@@ -17,11 +17,11 @@ export default class CustomFieldLabels {
   }
 
   search (query) {
-    return this.__client.request(this.__urlFor(), query)
+    return this.__client.request(this.__urlFor(), { query })
   }
 
   update (label) {
-    return this.__client.put(this.__urlFor(`/${label.id}`), { custom_field_label: label })
+    return this.__client.put(this.__urlFor(`/${label.id}`), { body: { custom_field_label: label } })
   }
 
   __urlFor (path = '') {
