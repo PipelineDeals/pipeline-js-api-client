@@ -30,7 +30,11 @@ export const fetcher = (path, options = {}) => {
   .then(toJSON)
 }
 
-const toJSON = response => response.json()
+const toJSON = response => {
+  if (response.status === 204) return {}
+
+  return response.json()
+}
 const url = (path, query = {}) =>
   Object.keys(query).length > 0
     ? `${path}?${param(query)}`

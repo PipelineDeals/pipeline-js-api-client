@@ -1,15 +1,15 @@
 process.env.NODE_ENV = 'test'
 
-var webpackConfig = require('./webpack.config.js');
+var webpackConfig = require('./webpack.config.js')
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', 'sinon'],
+    frameworks: ['jasmine', 'chai', 'sinon'],
 
     // list of files / patterns to load in the browser
     files: [
@@ -53,12 +53,13 @@ module.exports = function(config) {
     },
 
     plugins: [
-      require('karma-webpack'),
-      require('karma-sinon'),
+      require('karma-chai'),
+      require('karma-chrome-launcher'),
       require('karma-jasmine'),
       require('karma-jasmine-diff-reporter'),
       require('karma-phantomjs-launcher'),
-      require('karma-chrome-launcher')
+      require('karma-sinon'),
+      require('karma-webpack')
     ],
 
     // test results reporter to use

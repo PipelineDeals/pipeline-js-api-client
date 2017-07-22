@@ -1,5 +1,6 @@
 /* eslint-env node */
 'use strict'
+
 var webpack = require('webpack')
 var path = require('path')
 
