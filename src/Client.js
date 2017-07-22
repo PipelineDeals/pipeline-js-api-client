@@ -1,6 +1,7 @@
 import Requester from './Requester'
 
 import Account from './Account'
+import Companies from './Companies'
 import CustomFieldLabelDropdownEntries from './CustomFieldLabelDropdownEntries'
 import CustomFieldLabels from './CustomFieldLabels'
 import CustomFieldGroups from './CustomFieldGroups'
@@ -36,6 +37,10 @@ export default class Client {
 
   account () {
     return new Account(this)
+  }
+
+  companies () {
+    return new Companies(this)
   }
 
   customFieldLabelDropdownEntries () {

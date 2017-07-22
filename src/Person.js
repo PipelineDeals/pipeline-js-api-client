@@ -6,6 +6,14 @@ export default class Person {
     this.__client = client
   }
 
+  company () {
+    const { company_id: companyId } = this.attributes
+
+    return companyId
+      ? this.__client.companies().get(companyId)
+      : null
+  }
+
   deals () {
     return this.__client.request(this.__urlFor(`/deals`), { query: { include_notify_user_ids: true } })
   }
