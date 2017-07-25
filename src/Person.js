@@ -14,8 +14,8 @@ export default class Person {
       : null
   }
 
-  deals () {
-    return this.__client.request(this.__urlFor(`/deals`), { query: { include_notify_user_ids: true } })
+  deals (query = {}) {
+    return this.__client.request(this.__urlFor(`/deals`), { query })
   }
 
   __urlFor (path = '') {
