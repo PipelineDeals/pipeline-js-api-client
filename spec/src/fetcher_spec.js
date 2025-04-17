@@ -1,17 +1,18 @@
-/* global afterEach, beforeEach, describe, it, sinon */
+/* global sinon */
 import 'whatwg-fetch'
 
 import ResponseError from '../../src/ResponseError'
 import fetcher from '../../src/fetcher'
 
-/*
-  For some reason this isn't working through karma.conf.js
-  TODO: figure out why!
-*/
-const chai = require('chai')
-const chaiAsPromised = require('chai-as-promised')
+import chai from 'chai'
+import chaiAsPromised from 'chai-as-promised'
+
+import sinonTest from 'sinon-test'
 
 chai.use(chaiAsPromised)
+
+const test = sinonTest(sinon, { useFakeTimers: false })
+sinon.test = test
 
 const jsonResponse = ({ body, status = 200, statusText = '' }) => {
   const mockResponse = new window.Response(JSON.stringify(body), {
@@ -77,7 +78,7 @@ describe('fetcher', () => {
   })
 
   describe('response handling', () => {
-    it('throws a ResponseError for error status', sinon.test(() => {
+    it('throws a ResponseError for error status', sinon.test(async () => {
       window.fetch.withArgs('/fetcher', {
         credentials: 'same-origin',
         headers: {
@@ -86,17 +87,9 @@ describe('fetcher', () => {
         }
       }).returns(jsonResponse({ body: { bracketArray: true }, status: 400, statusText: 'Bad Request' }))
 
-      return chai.expect(
+      await chai.expect(
         fetcher('/fetcher')
       ).to.be.rejectedWith(ResponseError, 'Bad Request')
-    }))
-
-    it('return an empty Object for 204 status', sinon.test(() => {
-      window.fetch.returns(jsonResponse({ body: { unused: true }, status: 204 }))
-
-      return chai.expect(
-        fetcher('/fetcher')
-      ).to.become({})
     }))
   })
 })

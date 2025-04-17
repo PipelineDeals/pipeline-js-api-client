@@ -13,9 +13,9 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'node_modules/babel-polyfill/dist/polyfill.js',
-      'node_modules/whatwg-fetch/fetch.js',
-      'spec/**/*_spec.js'
+      { pattern: 'node_modules/babel-polyfill/dist/polyfill.js', watched: false, included: true, served: true },
+      { pattern: 'node_modules/whatwg-fetch/dist/fetch.umd.js', watched: false, included: true, served: true },
+      { pattern: 'spec/**/*_spec.js', type: 'module', watched: true }
     ],
 
     // list of files to exclude
@@ -35,6 +35,7 @@ module.exports = function (config) {
       // webpack watches dependencies
 
       // webpack configuration
+      mode: webpackConfig.mode,
       module: webpackConfig.module,
       resolveLoader: webpackConfig.resolveLoader,
       resolve: webpackConfig.resolve,
@@ -56,8 +57,6 @@ module.exports = function (config) {
       require('karma-chai'),
       require('karma-chrome-launcher'),
       require('karma-jasmine'),
-      require('karma-jasmine-diff-reporter'),
-      require('karma-phantomjs-launcher'),
       require('karma-sinon'),
       require('karma-webpack')
     ],
@@ -65,7 +64,7 @@ module.exports = function (config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['jasmine-diff', 'dots'],
+    reporters: ['dots'],
 
     // web server port
     port: 9876,
@@ -82,13 +81,18 @@ module.exports = function (config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
+    browsers: ['ChromeHeadless'],
 
     customLaunchers: {
-      // CRUFT: needed to load zaf_sdk with crossorigin=anonymous
-      Chrome_without_security: {
+      ChromeHeadless: {
         base: 'Chrome',
-        flags: ['--disable-web-security']
+        flags: [
+          '--disable-web-security',
+          '--headless',
+          '--disable-gpu',
+          '--no-sandbox',
+          '--remote-debugging-port=9222'
+        ]
       }
     },
 
@@ -97,7 +101,7 @@ module.exports = function (config) {
     singleRun: false,
 
     // Concurrency level
-    // how many browser should be started simultaneous
+    // how many browser should be started simultaneously
     concurrency: Infinity
   })
 }

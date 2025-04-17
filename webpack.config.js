@@ -1,44 +1,54 @@
-/* eslint-env node */
-'use strict'
+const webpack = require('webpack')
+const TerserPlugin = require('terser-webpack-plugin')
+const ESLintPlugin = require('eslint-webpack-plugin')
 
-var webpack = require('webpack')
-var path = require('path')
+const env = process.env.NODE_ENV
 
-var env = process.env.NODE_ENV
-
-var config = {
+const config = {
+  mode: env === 'production' ? 'production' : 'development',
   module: {
-    preLoaders: [
-      { test: /\.js$/, exclude: /node_modules/, loader: 'eslint-loader' }
-    ],
-    loaders: [
-      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' }
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
+      }
     ]
   },
   output: {
-    library: 'PipelineDeals',
-    libraryTarget: 'umd'
+    library: {
+      name: 'PipelineDeals',
+      type: 'umd',
+      umdNamedDefine: true
+    },
+    clean: true
   },
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(env)
+    }),
+    new ESLintPlugin({
+      files: '**/*.js',
+      exclude: 'node_modules',
+      useEslintrc: true,
+      eslintPath: require.resolve('eslint/lib/api')
     })
-  ]
-}
-
-if (env === 'production') {
-  config.plugins.push(
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        pure_getters: true,
-        unsafe: true,
-        unsafe_comps: true,
-        warnings: false
-      }
-    })
-  )
-  config.plugins.push(new webpack.optimize.DedupePlugin())
+  ],
+  optimization: {
+    minimize: env === 'production',
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          compress: {
+            pure_getters: true,
+            unsafe: true,
+            unsafe_comps: true,
+            warnings: false
+          }
+        }
+      })
+    ]
+  }
 }
 
 module.exports = config
