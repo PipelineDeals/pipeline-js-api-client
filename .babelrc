@@ -1,4 +1,16 @@
 {
-  "presets": ["es2015"],
-  "plugins": ["transform-object-rest-spread"]
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": {
+        "browsers": ["last 2 Chrome versions"]
+      },
+      "useBuiltIns": "usage",
+      "corejs": 3,
+      "modules": "commonjs"
+    }]
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-transform-runtime"
+  ]
 }

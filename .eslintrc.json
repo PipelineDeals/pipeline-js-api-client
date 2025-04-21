@@ -1,0 +1,10 @@
+{
+  "extends": "standard",
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": true,
+    "babelOptions": {
+      "presets": ["@babel/preset-env"]
+    }
+  }
+}

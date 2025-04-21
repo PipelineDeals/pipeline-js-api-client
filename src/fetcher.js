@@ -1,4 +1,3 @@
-/* global fetch */
 import qs from 'qs'
 
 import ResponseError from './ResponseError'
@@ -26,8 +25,8 @@ export const fetcher = (path, options = {}) => {
     },
     ...rest
   })
-  .then(handleResponse)
-  .then(toJSON)
+    .then(handleResponse)
+    .then(toJSON)
 }
 
 const toJSON = response => {
