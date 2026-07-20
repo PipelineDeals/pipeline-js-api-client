@@ -71,5 +71,8 @@
   "dependencies": {
     "qs": "^6.15.2",
     "whatwg-fetch": "^3.6.0"
+  },
+  "resolutions": {
+    "ws": "^8.21.0"
   }
 }
