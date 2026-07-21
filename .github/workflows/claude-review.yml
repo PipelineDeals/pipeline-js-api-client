@@ -1,76 +1,46 @@
-# Claude PR review — runs automatically when a PR is opened or marked ready
-# for review (drafts excluded), and on @claude mentions in PR comments.
-#
-# Requires: ANTHROPIC_API_KEY available to the repo (org-level secret).
 name: Claude Code
+
+# Thin shim — review logic lives in the org-wide reusable workflow
+# (pipeline_deals/.github/workflows/claude-review-reusable.yml).
+# This file owns only: triggers, concurrency, and the repo-specific prompt.
 
 on:
   pull_request:
-    types: [opened, ready_for_review]
+    types: [opened, ready_for_review, synchronize]
   issue_comment:
     types: [created]
   pull_request_review_comment:
     types: [created]
 
+# One run at a time per PR (queued, never cancelled).
+concurrency:
+  group: claude-review-${{ github.event.pull_request.number || github.event.issue.number || github.run_id }}
+  cancel-in-progress: false
+
 permissions:
   contents: read
   pull-requests: write
   issues: write
+  statuses: write
   actions: read
   id-token: write
 
 jobs:
   claude:
-    if: |
-      (github.event_name == 'pull_request' && github.event.pull_request.draft == false) ||
-      (github.event_name == 'issue_comment' && github.event.issue.pull_request && contains(github.event.comment.body, '@claude')) ||
-      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude'))
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Acknowledge comment
-        # Only comment events carry github.event.comment; skip on pull_request
-        if: github.event_name != 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            if (context.eventName === 'pull_request_review_comment') {
-              await github.rest.reactions.createForPullRequestReviewComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: context.payload.comment.id,
-                content: 'eyes'
-              });
-            } else {
-              await github.rest.reactions.createForIssueComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: context.payload.comment.id,
-                content: 'eyes'
-              });
-            }
-      - uses: anthropics/claude-code-action@v1
-        with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          prompt: |
-            Review this PR for a Pipeline CRM JavaScript project. Focus on:
-            - Bugs or logic errors
-            - XSS and injection risks: unsanitized user or API data reaching the
-              DOM, templates, or dynamically built queries/commands
-            - API token and credential handling — no secrets in code, logs, or
-              anything that ships in a client bundle
-            - Bundle size and dependency risk: new dependencies should be
-              justified, sensibly pinned, and free of supply-chain red flags
-            - Convention violations per this repo's CLAUDE.md, if present
+    uses: PipelineDeals/pipeline_deals/.github/workflows/claude-review-reusable.yml@master
+    secrets: inherit
+    # Caps inherit the reusable's defaults (30 turns / $1.50 / Sonnet).
+    with:
+      prompt: |
+        Review this PR for a Pipeline CRM JavaScript project. Focus on:
+        - Bugs or logic errors
+        - XSS and injection risks: unsanitized user or API data reaching the
+          DOM, templates, or dynamically built queries/commands
+        - API token and credential handling — no secrets in code, logs, or
+          anything that ships in a client bundle
+        - Bundle size and dependency risk: new dependencies should be
+          justified, sensibly pinned, and free of supply-chain red flags
+        - Convention violations per this repo's CLAUDE.md, if present
 
-            You have full repo access. Read any files you need to verify your findings.
-            Only flag issues introduced by this PR, not pre-existing patterns.
-            Be concise. If the code is sound, say so in 2-3 sentences — do not
-            manufacture findings. Reserve detailed comments for real issues.
-          track_progress: true
-          include_fix_links: true
-          claude_args: "--model claude-sonnet-5 --max-turns 12 --max-budget-usd 0.75"
+        You have full repo access. Read any files you need to verify your findings.
+        Only flag issues introduced by this PR, not pre-existing patterns.
