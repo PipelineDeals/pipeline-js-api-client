@@ -12,8 +12,14 @@ const handleResponse = response => {
 
 const param = query => qs.stringify(query, { arrayFormat: 'brackets' })
 
+const isJSONable = body =>
+  Array.isArray(body) ||
+  Object.prototype.toString.call(body) === '[object Object]'
+
+const serialize = body => isJSONable(body) ? JSON.stringify(body) : body
+
 export const fetcher = (path, options = {}) => {
-  const { auth, headers, query, ...rest } = options
+  const { auth, body, headers, query, ...rest } = options
   const fetchUrl = url(path, { ...query, ...auth })
 
   return fetch(fetchUrl, {
@@ -23,6 +29,7 @@ export const fetcher = (path, options = {}) => {
       'Content-Type': 'application/json',
       ...headers
     },
+    ...(body === undefined ? {} : { body: serialize(body) }),
     ...rest
   })
     .then(handleResponse)

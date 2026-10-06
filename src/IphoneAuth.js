@@ -8,7 +8,7 @@ export default function IphoneAuth (username, password, apiBase = 'https://api.p
   }
 
   return fetcher(path, {
-    body: JSON.stringify(body),
+    body,
     method: 'POST'
   }).then(json => { return json.user })
 }
