@@ -77,6 +77,52 @@ describe('fetcher', () => {
     }))
   })
 
+  describe('body serialization', () => {
+    const bodyOf = () => window.fetch.getCall(0).args[1].body
+
+    it('serializes an Object body as JSON', sinon.test(async () => {
+      window.fetch.returns(jsonResponse({ body: {} }))
+
+      await fetcher('/fetcher', { method: 'POST', body: { note: { content: 'hi' } } })
+
+      chai.expect(bodyOf()).to.equal('{"note":{"content":"hi"}}')
+    }))
+
+    it('serializes an Array body as JSON', sinon.test(async () => {
+      window.fetch.returns(jsonResponse({ body: {} }))
+
+      await fetcher('/fetcher', { method: 'POST', body: [1, 2] })
+
+      chai.expect(bodyOf()).to.equal('[1,2]')
+    }))
+
+    it('leaves an already serialized body alone', sinon.test(async () => {
+      window.fetch.returns(jsonResponse({ body: {} }))
+
+      await fetcher('/fetcher', { method: 'POST', body: '{"note":{"content":"hi"}}' })
+
+      chai.expect(bodyOf()).to.equal('{"note":{"content":"hi"}}')
+    }))
+
+    it('leaves a FormData body alone', sinon.test(async () => {
+      window.fetch.returns(jsonResponse({ body: {} }))
+
+      const form = new window.FormData()
+
+      await fetcher('/fetcher', { method: 'POST', body: form })
+
+      chai.expect(bodyOf()).to.equal(form)
+    }))
+
+    it('sends no body when none was given', sinon.test(async () => {
+      window.fetch.returns(jsonResponse({ body: {} }))
+
+      await fetcher('/fetcher')
+
+      chai.expect(window.fetch.getCall(0).args[1]).to.not.have.property('body')
+    }))
+  })
+
   describe('response handling', () => {
     it('throws a ResponseError for error status', sinon.test(async () => {
       window.fetch.withArgs('/fetcher', {

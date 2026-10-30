@@ -11,11 +11,11 @@ export default class Requester {
   }
 
   post (path, { body = {}, ...options } = {}) {
-    return fetcher(this.__path(path), { auth: this.__auth, method: 'POST', body: JSON.stringify(body), ...options })
+    return fetcher(this.__path(path), { auth: this.__auth, method: 'POST', body, ...options })
   }
 
   put (path, { body = {}, ...options } = {}) {
-    return fetcher(this.__path(path), { auth: this.__auth, method: 'PUT', body: JSON.stringify(body), ...options })
+    return fetcher(this.__path(path), { auth: this.__auth, method: 'PUT', body, ...options })
   }
 
   request (path, options = {}) {
