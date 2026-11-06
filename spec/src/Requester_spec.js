@@ -30,6 +30,49 @@ describe('Requester', () => {
           done()
         })
     })
+
+    it('sends the body as JSON', (done) => {
+      window.fetch.returns(jsonOk({ id: 123 }))
+
+      let client = new Requester('http://pld.com/api/v3', {apiKey: '1234'})
+
+      client.post('/notes.json', { body: { note: { content: 'hi' } } })
+        .catch(done)
+        .then(() => {
+          expect(window.fetch.getCall(0).args[1].body).toEqual('{"note":{"content":"hi"}}')
+          done()
+        })
+    })
+  })
+
+  describe('#put', () => {
+    it('sends the body as JSON', (done) => {
+      window.fetch.returns(jsonOk({ id: 123 }))
+
+      let client = new Requester('http://pld.com/api/v3', {apiKey: '1234'})
+
+      client.put('/notes/1.json', { body: { note: { content: 'hi' } } })
+        .catch(done)
+        .then(() => {
+          expect(window.fetch.getCall(0).args[1].body).toEqual('{"note":{"content":"hi"}}')
+          done()
+        })
+    })
+  })
+
+  describe('#delete', () => {
+    it('sends the body as JSON', (done) => {
+      window.fetch.returns(jsonOk({ id: 123 }))
+
+      let client = new Requester('http://pld.com/api/v3', {apiKey: '1234'})
+
+      client.delete('/notes.json', { body: { ids: [1, 2] } })
+        .catch(done)
+        .then(() => {
+          expect(window.fetch.getCall(0).args[1].body).toEqual('{"ids":[1,2]}')
+          done()
+        })
+    })
   })
 
   describe('#request', () => {
